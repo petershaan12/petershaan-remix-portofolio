@@ -36,7 +36,7 @@ export function getAllTags(posts: Array<Post>) {
 }
 
 export function sortTagsByCount(tags: Record<string, number>) {
-  return Object.keys(tags).sort((a, b) => (tags[b] = tags[a]));
+  return Object.keys(tags).sort((a, b) => (tags[b] - tags[a]));
 }
 
 export function getPostsByTagSlug(posts: Array<Post>, tag: string) {
