@@ -10,12 +10,17 @@ import NotFound from "~/components/not-found";
 import { connectDB, getDB } from "~/lib/db.server.";
 import { useEffect } from "react";
 
-// const redis = Redis.fromEnv();  
+export const meta: MetaFunction<typeof loader> = ({ data }) => {  
+  if(!data) {
+    return [
+      { title: "Tag: Not Found" },
+      { description: "Tag of my blog" },
+    ]
+  }
 
-export const meta: MetaFunction = () => {
+  const { tag } = data;
   return [
-    { title: "Tag: " },
-    { description: "Tag of my blog" },
+    { title: `Tag: ${tag}` },
   ]
 }
 
