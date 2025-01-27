@@ -7,17 +7,39 @@ import { Tag } from "~/components/tag";
 import { connectDB, getDB } from "~/lib/db.server.";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {  
-  if (!data || !data.post) {  
-    return [  
-      { title: "Not Found" },  
-      { description: "The post you are looking for does not exist." },  
-    ];  
-  }  
+  if (!data || !data.post) {    
+    return [    
+      { title: "Not Found" },    
+      { name: "description", content: "The post you are looking for does not exist." },    
+      { property: "og:title", content: "Not Found" },    
+      { property: "og:description", content: "The post you are looking for does not exist." },    
+      { property: "og:type", content: "website" },    
+      { name: "twitter:card", content: "summary" },    
+      { name: "twitter:title", content: "Not Found" },    
+      { name: "twitter:description", content: "The post you are looking for does not exist." },    
+    ];    
+  }    
+    
+  const { post } = data;  
+  const ogSearchParams = new URLSearchParams();  
+  ogSearchParams.set("title", post.title);  
   
-  return [  
-    { title: data.post.title },  
-    { description: data.post.description || "No description available." },  
-  ];  
+  return [    
+    { title: post.title },    
+    { name: "description", content: post.description || "No description available." },      
+    { property: "og:title", content: post.title },    
+    { property: "og:description", content: post.description || "No description available." },    
+    { property: "og:type", content: "article" },    
+    { property: "og:url", content: post.url },    
+    { property: "og:image", content: `/api/og?${ogSearchParams.toString()}` },    
+    { property: "og:image:width", content: "1920" },    
+    { property: "og:image:height", content: "1080" },    
+    { property: "og:image:alt", content: post.title },    
+    { name: "twitter:card", content: "summary_large_image" },    
+    { name: "twitter:title", content: post.title },    
+    { name: "twitter:description", content: post.description || "No description available." },    
+    { name: "twitter:image", content: `/api/og?${ogSearchParams.toString()}` },    
+  ];    
 };  
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {  
