@@ -1,7 +1,7 @@
 import { createCookieSessionStorage } from "@remix-run/node"
 import { createThemeSessionResolver } from "remix-themes"
 
-const isProduction = "production"
+const isProduction = process.env.NODE_ENV === "production"
 
 const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -12,7 +12,7 @@ const sessionStorage = createCookieSessionStorage({
     secrets: ["s3cr3t"],
 
     ...(isProduction
-      ? { domain: "your-production-domain.com", secure: true }
+      ? { domain: "shaan.my.id", secure: true }
       : {}),
   },
 })

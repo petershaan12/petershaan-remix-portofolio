@@ -21,6 +21,7 @@ import clsx from "clsx";
 import { SiteFooter } from "./components/site-footer";
 import * as gtag from "~/lib/gtags.client";
 import { useEffect } from "react";
+import NotFound from "./components/not-found";
 
 export const links: LinksFunction = () => [
   {
@@ -48,11 +49,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   };
 }
 
-
 function Layout({ children }: { children: React.ReactNode }) {
   const [theme] = useTheme();
   const location = useLocation();
-  const { gaTrackingId } = useLoaderData<typeof loader>();
+  const { gaTrackingId } = useLoaderData<typeof loader>() || "";
 
   useEffect(() => {
     if (gaTrackingId?.length) {
@@ -69,7 +69,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
-      {process.env.NODE_ENV === "development" || !gaTrackingId ? null : (
+        {process.env.NODE_ENV === "development" || !gaTrackingId ? null : (
           <>
             <script
               async
@@ -117,4 +117,25 @@ export default function AppWithProviders() {
   );
 }
 
-
+export function ErrorBoundary({ error }: { error: Error }) {
+  return ( 
+    <html lang="en" className="dark">
+    <head>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <Meta />
+      <Links />
+    </head>
+    <body className={cn("min-h-screen bg-background font-sans antialiased")}>
+      <div className="relative flex flex-col mt-16">
+        <main className="flex-1 antialiased max-w-2xl mx-auto">
+          <NotFound />
+        </main>
+        <SiteFooter />
+      </div>
+      <ScrollRestoration />
+      <Scripts />
+    </body>
+  </html>
+  )
+}

@@ -28,7 +28,7 @@ export function MobileNav() {
           <Icons.logo className="mr-2 h-4 w-4" />  
         </MobileLink>  
         <div className="flex flex-col gap-3 mt-8">  
-          <MobileLink onOpenChange={setOpen} to="/blog">  
+          <MobileLink onOpenChange={setOpen} to="/blogs">  
             Blog  
           </MobileLink>  
           <MobileLink onOpenChange={setOpen} to="/projects">  

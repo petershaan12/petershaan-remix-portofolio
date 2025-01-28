@@ -5,6 +5,7 @@ import { MDXContent } from "~/components/mdx-component";
 import NotFound from "~/components/not-found";
 import { Tag } from "~/components/tag";
 import { connectDB, getDB } from "~/lib/db.server.";
+import "../../public/styles/mdx.css";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {  
   if (!data || !data.post) {    
