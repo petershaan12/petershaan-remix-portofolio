@@ -23,6 +23,8 @@ import * as gtag from "~/lib/gtags.client";
 import { useEffect } from "react";
 import NotFound from "./components/not-found";
 
+import { NotifNew } from "./components/notif-new";
+
 export const links: LinksFunction = () => [
   {
     rel: "icon",
@@ -94,8 +96,11 @@ function Layout({ children }: { children: React.ReactNode }) {
         )}
         <div className="relative flex flex-col">
           <SiteHeader />
-          <main className="flex-1 antialiased max-w-2xl mx-auto">{children}</main>
+          <main className="flex-1 antialiased max-w-2xl mx-auto">
+            {children}
+          </main>
           <SiteFooter />
+          <NotifNew />
         </div>
         <ScrollRestoration />
         <Scripts />
